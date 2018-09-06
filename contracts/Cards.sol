@@ -4,7 +4,7 @@ contract Cards {
 
     string public url;
 
-    event urlEvent(string url, address indexed _from);
+    event urlEvent(string _url, address indexed _from);
     
     function setUrl(string _newUrl) public {
         url = _newUrl;

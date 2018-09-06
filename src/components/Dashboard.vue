@@ -9,15 +9,27 @@
     <p>Network: {{ network }}</p>
     <p>Account Address: {{ address }}</p>
     <input name="urlForm" v-model="form.url">
-    <div><a href="#" @click="setUrlFromInput">Set URL</a>.</div>
-    <p>HELLO!</p>
+    <div><p></p><a id="setLink" href="#" @click="setUrlFromInput">Set URL</a></div>
+    <!-- <p>Urls: {{events}}</p> -->
+    <ul id="urlList">
+      <li v-for="event in events.slice().reverse()">
+        <div class="linkBoxes">
+          <p>Author: {{ event._from }}</p>
+          <a v-bind:href='event._url'>{{ event._url }}</a>
+          <!-- Set link name as well. -->
+        </div>
+      </li>
+    </ul>
+
   </div>
 </template>
 
 <script>
 import Users from '@/js/users'
 import Cards from '@/js/cards'
-
+// Cards.deployed().then(function(instance) { cards = instance; });
+// var event = cards.urlEvent({from:web3.eth.coinbase}, {fromBlock: 0, toBlock: 'latest'})
+// event.watch(function(error,result){console.log(result.args)})
 export default {
   name: 'dashboard',
   data () {
@@ -118,11 +130,37 @@ ul {
 }
 
 li {
-  display: inline-block;
+  /* display: inline-block; */
   margin: 0 10px;
 }
 
 a {
   color: #42b983;
+}
+
+.linkBoxes{
+  background-color: lightgray;
+  border: 1px solid orange;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.linkBoxes a{
+  color: black;
+  text-decoration: none;
+}
+.linkBoxes a:hover{
+  color: greenyellow;
+  text-decoration: none;
+}
+
+#urlList{
+  margin: auto;
+  width: 80%
+}
+#setLink{
+  background-color: black;
+  padding: 10px;
 }
 </style>
