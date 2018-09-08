@@ -2,7 +2,7 @@
   <div class="dashboard">
     <h1>{{ msg }}</h1>
     <div v-if="userExists">
-      Welcome {{ pseudo }}. Destroy your account by clicking <a href="#" @click="destroyAccount">here</a>.
+      Welcome <a href="">{{ pseudo }}</a>. Destroy your account by clicking <a href="#" @click="destroyAccount">here</a>.
     </div>
     <div v-else>Sign up <router-link to="/signup">here</router-link>.</div>
       <p>Current Provider: {{ provider }}</p>
@@ -12,7 +12,8 @@
     <div><p></p><a id="setLink" href="#" @click="setUrlFromInput">Set URL</a></div>
     <!-- <p>Urls: {{events}}</p> -->
     <ul id="urlList">
-      <li v-for="event in events.slice().reverse()">
+      <!-- <li v-for="event in events.slice().reverse()"> -->
+      <li v-for="event in events.slice(events.length - 5, events.length).reverse()">
         <div class="linkBoxes">
           <p>Author: {{ event._from }}</p>
           <a v-bind:href='event._url'>{{ event._url }}</a>
@@ -20,7 +21,8 @@
         </div>
       </li>
     </ul>
-
+    
+    <p>add Load more button after x amount of cards</p>
   </div>
 </template>
 
@@ -55,13 +57,12 @@ export default {
     Cards.init().then(() => {
       console.log('Is tests deployed here?: ' + Cards.contract.isDeployed())
       Cards.urlEvent().watch((err, result) => {
-        console.log('IS THIS WORKING?')
         if (err) {
-          console.log('error')
+          // console.log('error')
           console.log(err)
         } else {
-          console.log('All urls')
-          console.log(result.args)
+          // console.log('All urls')
+          console.log(result)
           // console.log(result.args.url)
           this.events.push(result.args)
           // this.events = result.args.url
@@ -72,6 +73,11 @@ export default {
     })
     Users.init().then(() => {
       Users.exists(window.web3.eth.accounts[0]).then((exists) => {
+        this.address = window.web3.eth.accounts[0]
+        this.network = window.web3.isConnected()
+        if (window.web3.currentProvider.isMetaMask) {
+          this.provider = 'metamask'
+        }
         if (exists) {
           Users.authenticate().then(pseudo => {
             this.pseudo = pseudo

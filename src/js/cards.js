@@ -91,17 +91,6 @@ const Cards = {
   urlEvent: function () {
     let self = this
     return self.instance.urlEvent({}, {fromBlock: 0, toBlock: 'latest'})
-//     console.log(self.instance.urlEvent())
-//     self.instance.urlEvent().watch((err, result) => {
-//       if (err) {
-//         return err
-//         // console.log(err)
-//       } else {
-//         // console.log(result.args.url)
-//         return result.args
-// //        console.log(result.args)
-//       }
-//     })
   }
 }
 export default Cards
